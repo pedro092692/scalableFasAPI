@@ -43,13 +43,14 @@ class UserRepository:
         :param limit: the number of returned results
         :return: list with databse results
         """
+        users = self.db.query(UserModel).offset(skip).limit(limit).scalar().all()
+        print(users)
         return self.db.query(UserModel).offset(skip).limit(limit).scalar().all()
 
-    def create(self, data: UserCreate, hashed_pw: str) -> UserModel:
+    def create(self, data: UserCreate,) -> UserModel:
         """
         Creates a new user in the database
         :param data: user data name, email and password
-        :param hashed_pw: hashed_pw not used now for test
         :return: the new user created Usermodel
         """
         user = UserModel(
@@ -72,7 +73,6 @@ class UserRepository:
         """
         for field, value in data.model_dump(exclude_unset=True).items():
             setattr(user, field, value)
-
         self.db.commit()
         self.db.refresh(user)
         return user
@@ -80,3 +80,4 @@ class UserRepository:
     def delete(self, user: UserModel) -> None:
         self.db.delete(user)
         self.db.commit()
+        return None

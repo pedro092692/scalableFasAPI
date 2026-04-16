@@ -1,5 +1,5 @@
 from app.repositories.user_repo import UserRepository
-from app.schemas.user import UserCreate, UserUpdate, UserResponse
+from app.schemas.user import UserCreate, UserUpdate, UserResponse, PaginatedUser
 from fastapi import HTTPException, status
 import logging
 
@@ -31,7 +31,7 @@ class UserService:
         if not user:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail=f'Usuario con ID {user.id} no encontrado'
+                detail=f'Usuario con ID {user_id} no encontrado'
             )
         return UserResponse.model_validate(user)
 
@@ -40,7 +40,18 @@ class UserService:
         if not user:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail=f'Usuario con ID {user.id} no encontrado'
+                detail=f'Usuario con ID {user_id} no encontrado'
             )
         updated = self.repo.update(user, data)
         return UserResponse.model_validate(updated)
+
+    def delete_user(self, user_id: int):
+        user = self.repo.get_by_id(user_id)
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f'Usuario con ID {user_id} no encontrado'
+            )
+        return self.repo.delete(user)
+
+

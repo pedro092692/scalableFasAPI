@@ -8,7 +8,6 @@ settings = get_settings()
 # connection engine
 engine = create_engine(
     settings.database_url,
-    connect_args={"check_same_thread": False}
 )
 
 # the sessions factory for each request create a new session
