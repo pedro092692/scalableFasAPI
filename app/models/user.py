@@ -6,9 +6,9 @@ class Base(DeclarativeBase):
     pass
 
 
-class User(Base):
+class UserModel(Base):
     __tablename__ = 'usuarios'
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(50))
     email: Mapped[str] = mapped_column(String(50))
-    password: Mapped[str] = mapped_column(String(50))
+    password: Mapped[str] = mapped_column(String(255))
