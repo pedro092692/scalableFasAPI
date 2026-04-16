@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import Optional
 
 
+
 # Request schema (that api receives)
 class UserCreate(BaseModel):
     name: str
