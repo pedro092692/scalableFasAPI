@@ -35,7 +35,7 @@ class UserService:
             )
         return UserResponse.model_validate(user)
 
-    def update_user(self, user_id: int, data: UserUpdate):
+    def update_user(self, user_id: int, data: UserUpdate) -> UserResponse:
         user = self.repo.get_by_id(user_id)
         if not user:
             raise HTTPException(
@@ -45,7 +45,7 @@ class UserService:
         updated = self.repo.update(user, data)
         return UserResponse.model_validate(updated)
 
-    def delete_user(self, user_id: int):
+    def delete_user(self, user_id: int) -> None:
         user = self.repo.get_by_id(user_id)
         if not user:
             raise HTTPException(
@@ -53,5 +53,17 @@ class UserService:
                 detail=f'Usuario con ID {user_id} no encontrado'
             )
         return self.repo.delete(user)
+
+    def all_users(self, page: int = 1, limit: int = 10) -> PaginatedUser:
+        offset = (page - 1) * limit
+        users = self.repo.get_all(skip=offset, limit=limit)
+        total_users = self.repo.count_all()
+
+        return PaginatedUser(
+            items=users,
+            total=total_users,
+            page=page,
+            per_page=limit
+        )
 
 

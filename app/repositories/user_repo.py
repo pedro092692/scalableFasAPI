@@ -43,9 +43,7 @@ class UserRepository:
         :param limit: the number of returned results
         :return: list with databse results
         """
-        users = self.db.query(UserModel).offset(skip).limit(limit).scalar().all()
-        print(users)
-        return self.db.query(UserModel).offset(skip).limit(limit).scalar().all()
+        return self.db.query(UserModel).offset(skip).limit(limit).all()
 
     def create(self, data: UserCreate,) -> UserModel:
         """
@@ -81,3 +79,6 @@ class UserRepository:
         self.db.delete(user)
         self.db.commit()
         return None
+
+    def count_all(self) -> int:
+        return self.db.query(UserModel).count()

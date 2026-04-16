@@ -11,6 +11,14 @@ def user_routes():
     return {'message': 'user routes'}
 
 
+@router.get('/all', response_model=PaginatedUser)
+async def all_users(
+        page: int = 1,
+        limit: int = 10,
+        service: UserService = Depends(get_user_service)):
+    return service.all_users(page=page, limit=limit)
+
+
 @router.post('/', response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 async def create_user(
         data: UserCreate,
