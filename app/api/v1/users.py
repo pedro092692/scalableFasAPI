@@ -5,10 +5,9 @@ from app.dependencies import get_user_service
 
 router = APIRouter(prefix='/users', tags=['Users'])
 
-
 @router.get('/')
 def user_routes():
-    return {'message': 'user routes'}
+    return {'message': 'user routes :p'}
 
 
 @router.get('/all', response_model=PaginatedUser)
