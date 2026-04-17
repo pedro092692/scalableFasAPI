@@ -46,12 +46,15 @@ class UserService:
         return UserResponse.model_validate(updated)
 
     def delete_user(self, user_id: int) -> None:
+        logger.info(f'Eliminando usario con el ID: {user_id}')
         user = self.repo.get_by_id(user_id)
         if not user:
+            logger.info(f'Con el ID: {user_id} No eliminado (no Existe)')
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f'Usuario con ID {user_id} no encontrado'
             )
+        logger.info(f'Usuario con el ID: {user_id} eliminado...')
         return self.repo.delete(user)
 
     def all_users(self, page: int = 1, limit: int = 10) -> PaginatedUser:
