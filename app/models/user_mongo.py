@@ -10,13 +10,10 @@ class UserDocument(Document):
         Benaie combina el modelo ORM y Pydantic en uno solo.
     """
     name: str
-    email: EmailStr
+    email: Indexed(EmailStr, unique=True)  # primary key
     password: str
     created_at: datetime = Field(default_factory=datetime.now)
     is_active: bool = True
 
     class Settings:
         name = "users"
-        indexes = [
-            [("Email", 1)]
-        ]
