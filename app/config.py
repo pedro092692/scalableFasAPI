@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     app_env: str = 'development'
     app_debug: bool = False
     database_url: str
+    mongodb_url: str
+    mongodb_db_name: str
     secret_key: str
     access_token_expire_minutes: int = 60
 
@@ -19,6 +21,7 @@ class Settings(BaseSettings):
     @property
     def is_production(self) -> bool:
         return self.app_env == "production"
+
 
 
 @lru_cache()

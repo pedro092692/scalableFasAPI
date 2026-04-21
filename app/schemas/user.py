@@ -40,6 +40,13 @@ class UserResponse(BaseModel):
     model_config = {'from_attributes': True}
 
 
+class UserMongoResponse(BaseModel):
+    id: str
+    name: str
+    email: str
+    # created_at: datetime
+
+
 # Schema for pagination
 class PaginatedUser(BaseModel):
     items: list[UserResponse]
