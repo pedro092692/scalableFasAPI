@@ -30,12 +30,12 @@ class TestCreateUser:
 
 
     def test_create_user_invalid_email(self, client):
-        paylod = {
+        payload = {
             'name': 'test',
             'email': 'no-an-email',
             'password': 'notsecure123'
         }
-        response = client.post('/api/v1/users', json=paylod)
+        response = client.post('/api/v1/users', json=payload)
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_CONTENT
 
 
